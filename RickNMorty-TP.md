@@ -36,11 +36,11 @@ Il (l'utilisateur) veut dans un premier temps connaitre les personnages de la s�
 ----- 
 ### Exercice 0 - Lire le sujet 
 
-> 7 minutes max
+> 7 minutes max   
 
 ###  Exercice 1 - Conception d'une application
 
-> 10 minutes max
+> 10 minutes max   
 
 - Lisez le brief qui explique l'utilité final de l'application au dessus.
 - Explorer un peu la documentation de l'API :
@@ -56,7 +56,7 @@ Il (l'utilisateur) veut dans un premier temps connaitre les personnages de la s�
 
 ### Exercice 2 - Analyse Technique
 
-> 30 minutes max
+> 30 minutes max   
 
 - Reprenez la liste des fonctionnalités que vous avez réalisé en **1** et pour chaque fonctionnalité noter les besoins et contraintes techniques 
   -  **Par exemple** : Quels objets allez vous avoir besoin ? Quels composants Material ? Quelles bibliothèques allez vous devoir utiliser ?
@@ -66,18 +66,23 @@ Il (l'utilisateur) veut dans un premier temps connaitre les personnages de la s�
 
 ### Exercice 3 - Réalisation de l'application
 
-> 1h max
+> 1h max   
 
 - Réaliser l'application, vous devriez avoir assez d'informations grâce aux exercices 1 & 2 pour pouvoir avancer rapidement.
 - Demander à l'enseignant de valider.
 
 ### Exercice 4 - Améliorer l'application
 
-> 45m max
+> 45m max   
 
 - Faites en sorte que l'utilisateur filtrer la liste des personnages par status : Vivant / Mort
+![rnm_3.png](projectAssets/rnm_3.png)
 - Bonus : Ajouter un bouton `Retour` à votre AppBar, changer l'icone et le thème de l'application pour une meilleure immersion de l'utilisateur. 
 - Demander à l'enseignant de valider.
+
+### Exercice 5 (Bonus) - Les mondes
+> ?m max
+- Implémenter un navigateur de localisations depuis les routes `location` de l'API Rick N Morty
 
 ## Les notions techniques que vous devez maitriser
 - `Layout` -> Notion de base mais il faut savoir fair un layout qui soit adapté à différentes tailles d'écran.
@@ -88,3 +93,8 @@ Il (l'utilisateur) veut dans un premier temps connaitre les personnages de la s�
 - `AsyncTask + AsyncTaskLoader` -> Faire un appel réseau fluide en déportant le traitement de la requete sur un `thread` asynchrone
 - `JSON + JSONObject API` -> Pouvoir parser les données reçu avec l'ensemble des fonctions de `JSONObject`
 - `Model de MVC` -> Vous maitriser le `MVC` il faudra implémenter la partie `Model` avec une ou plusieurs classe qui vous permettront de gérer les données reçus de l'API pour votre interface.
+
+## Tips 
+- Pour charger une image dans une imageView utilisez [Glide](https://github.com/bumptech/glide)
+- Essayer d'utiliser ce que vous avez vu dans les codelabs. Vous gagnerez du temps.
+- Pour faire un équivalent à `<select>`sur Android : [Spinner](https://developer.android.com/guide/topics/ui/controls/spinner#java) 
