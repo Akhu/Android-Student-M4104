@@ -95,6 +95,88 @@ Il (l'utilisateur) veut dans un premier temps connaitre les personnages de la s�
 - `Model de MVC` -> Vous maitriser le `MVC` il faudra implémenter la partie `Model` avec une ou plusieurs classe qui vous permettront de gérer les données reçus de l'API pour votre interface.
 
 ## Tips 
+- Chercher par vous-même ce dont vous avez besoin, Google et [la documentation de Google](https://developer.android.com/docs/) sont vos amis. Pour être un bon développeur soyez perseverant.
 - Pour charger une image dans une imageView utilisez [Glide](https://github.com/bumptech/glide)
 - Essayer d'utiliser ce que vous avez vu dans les codelabs. Vous gagnerez du temps.
 - Pour faire un équivalent à `<select>`sur Android : [Spinner](https://developer.android.com/guide/topics/ui/controls/spinner#java) 
+- `notifyDataSetChanged()` appelé sur un `RecyclerView` permet de lui demander de se rafraichir avec de nouvelles données.
+
+## Codes samples
+- Exemple d'appel à une API prise depuis le codelabs 7.2, à vous de l'adapter à vos besoin pour Rick & Morty
+```java
+public class NetworkUtils {
+    private static final String LOG_TAG = NetworkUtils.class.getSimpleName();
+
+
+    private static final String BOOK_BASE_URL = "https://www.googleapis.com/books/v1/volumes?";
+    private static final String QUERY_PARAM = "q";
+    private static final String MAX_RESULTS = "maxResults";
+    private static final String PRINT_TYPE = "printType";
+
+
+    static String getBookInfo(String queryString) {
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        String bookJSONString = null;
+
+        try {
+            Uri builtUri = Uri.parse(BOOK_BASE_URL).buildUpon()
+                    .appendQueryParameter(QUERY_PARAM, queryString)
+                    .appendQueryParameter(MAX_RESULTS, "10")
+                    .appendQueryParameter(PRINT_TYPE, "books")
+                    .build();
+            URL requestURL = new URL(builtUri.toString());
+
+            urlConnection = (HttpURLConnection) requestURL.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            InputStream inputStream = urlConnection.getInputStream();
+
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            StringBuilder builder = new StringBuilder();
+
+            String line;
+
+            while ((line = reader.readLine()) != null){
+                builder.append(line);
+
+                builder.append("\n");
+            }
+
+            if(builder.length() == 0){
+                return null;
+            }
+
+            bookJSONString = builder.toString();
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            if(urlConnection != null){
+                urlConnection.disconnect();
+            }
+            if(reader != null){
+                try {
+                    reader.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        Log.d(LOG_TAG, bookJSONString);
+        return bookJSONString;
+    }
+}
+```
+- Exemple de constructeur d'un objet depuis une `string` JSON
+```java
+    MonObjet(String fromJsonRawInput) throws JSONException {
+        Log.d(TAG, fromJsonRawInput);
+        JSONObject jsonObject = new JSONObject(fromJsonRawInput);
+
+        this.id = jsonObject.getInt("id");
+        this.name = jsonObject.getString("name");
+        this.variable = jsonObject.getString("variable");
+    }
+```
