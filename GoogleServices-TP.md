@@ -74,10 +74,10 @@ https://console.developers.google.com
 4. Nous allons utiliser le SDK Google Maps pour Android, il faut donc le chercher et cliquer dessus, puis l'activer. Il devrait y avoir un léger temps d'initialisation.
 5. Vous avez maintenant accès aux service de Google Maps pour Android. 
 6. Créer votre clé d'API qui sera intégrer dans votre applications pour que les serveurs Google vous autorisent à utiliser Google Maps dans votre application comme suit : `Identifiants > Créer des identifiants > Clé d'API`
-7. Le service vous présente la clé, copier la quelque part. 
+7. Le service vous présente la clé, copier la quelque part.  
 
 ### Etape 3 - Intégrer la clé d'API dans votre application
-Pour faire propre il faut d'abord créer un fichier de ressources dans `/res`, appelez le comme vous voudrez et mettez cela à l'interieur
+Pour faire propre il faut d'abord créer un fichier de ressources dans `/res`, appelez le comme vous voudrez et mettez cela à l'interieur   
 
 ```xml
 <resources>
@@ -85,14 +85,15 @@ Pour faire propre il faut d'abord créer un fichier de ressources dans `/res`, a
     string in this file.-->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">{youKeyHere}</string>
 </resources>
-```
+```   
 
-- Il faut aussi que vous mettiez une référence à cette clé dans votre manifest, en intégrant les Services Google à votre application, l'application Google Play Service va fusionner son manifest avec le votre, et à besoin de savoir que vous avez une bonne clé d'API
+- Il faut aussi que vous mettiez une référence à cette clé dans votre manifest, en intégrant les Services Google à votre application, l'application Google Play Service va fusionner son manifest avec le votre, et à besoin de savoir que vous avez une bonne clé d'API   
+
 ```xml
  <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="@string/google_maps_key" />
-```
+```   
 
 Voilà vous êtes paré à commencer à Coder ! Non en fait faut lire la documentation ;)
 
@@ -108,90 +109,90 @@ Voilà vous êtes paré à commencer à Coder ! Non en fait faut lire la documen
 
 ### Exercice 2 - Detecter la position du téléphone
 Vous avez votre super carte ? Super, maintenant recréer cette interface : 
-![](projectAssets/mapInterface.png)
+![](projectAssets/mapInterface.png)   
 - Ajouter un listener au bouton `Me Localiser` dans votre Activité
 
 - Ajouter dans `build.gradle` les dépendances suivantes si ce n'est pas déjà le cas : 
-```groovy
-//Google Maps
-implementation 'com.google.android.gms:play-services-maps:16.0.0' 
-//Google Location Provider, pour acceder à la localisation du téléphone
-implementation 'com.google.android.gms:play-services-location:16.0.0'
-```
+    ```groovy
+    //Google Maps
+    implementation 'com.google.android.gms:play-services-maps:16.0.0' 
+    //Google Location Provider, pour acceder à la localisation du téléphone
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    ```
 - Affichez un `Toast`lors du clique sur le bouton "Me Localiser" et **faites valider par l'enseignant**
 
-- Pour localiser le téléphone vous allez avoir besoin de plusieurs objets : 
-```java
-    //Une variable définissant le Zoom de votre carte
-    private static final float DEFAULT_ZOOM = 12; 
-    // Fait en exercice 2
-    private GoogleMap mMap; 
-    //Identifiant de la demande de permission
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1; 
-    //Si l'utilisateur à autoriser la localisation ou non
-    private Boolean mLocationPermissionGranted = false; 
-    //Dernière position détéctée
-    private Location mLastKnowLocation; 
-    //Permet de récuperer la position
-    private FusedLocationProviderClient mFusedLocationProviderClient; 
-     //Une position par défault au cas où
-    private LatLng mDefaultLocation;
-```
+- Pour localiser le téléphone vous allez avoir besoin de plusieurs objets :     
+    ```java
+        //Une variable définissant le Zoom de votre carte
+        private static final float DEFAULT_ZOOM = 12; 
+        // Fait en exercice 2
+        private GoogleMap mMap; 
+        //Identifiant de la demande de permission
+        private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1; 
+        //Si l'utilisateur à autoriser la localisation ou non
+        private Boolean mLocationPermissionGranted = false; 
+        //Dernière position détéctée
+        private Location mLastKnowLocation; 
+        //Permet de récuperer la position
+        private FusedLocationProviderClient mFusedLocationProviderClient; 
+        //Une position par défault au cas où
+        private LatLng mDefaultLocation;
+    ```   
 - Créer ces variables d'instance dans `MainActivity` et initialisez les dans `onCreate`
 
 #### Les Permissions
-A partir de la version 6 d'Android les développeurs d'application doivent demander explicitement à l'utilisateur l'autorisation d'avoir accès à certaines fonctionnalités du téléphone. La localisation en fait partie.
+A partir de la version 6 d'Android les développeurs d'application doivent demander explicitement à l'utilisateur l'autorisation d'avoir accès à certaines fonctionnalités du téléphone. La localisation en fait partie.    
 
-Avant de detecter la position du téléphone il va falloir demander à l'utilisateur si il le veut bien.
+Avant de detecter la position du téléphone il va falloir demander à l'utilisateur si il le veut bien.   
 [Plus de détails ici avec une vidéo](https://www.youtube.com/watch?v=C8lUdPVSzDk)
 
-> Les permissions sont fastidieuses à gérer mais très importantes dans l'experience utilisateur, trop de permissions demandées et il désinstalle. Demandez les au moment où l'utilisateur souhaite accéder une fonction particulière qui nécessite une permission. Ne demandez pas tout d'un coup au démarrage de l'app. 
+> Les permissions sont fastidieuses à gérer mais très importantes dans l'experience utilisateur, trop de permissions demandées et il désinstalle. Demandez les au moment où l'utilisateur souhaite accéder une fonction particulière qui nécessite une permission. Ne demandez pas tout d'un coup au démarrage de l'app.   
 
+![](projectAssets/permission_schema.png)    
 
-![](projectAssets/permission_schema.png)
-
-- Voici le code pour demander la permission de localisation : 
+- Voici le code pour demander la permission de localisation :      
+    
     ```java
-        //On implémente l'interface pour recevoir la réponse de l'utilisateur lors de la demande de permission
-        public class MainActivity implements ActivityCompat.OnRequestPermissionsResultCallback
-        
-        [...]
-        
-        //On reçoit la réponse de l'utilisateur ici 
-        @Override 
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-                mLocationPermissionGranted = false;
-                switch (requestCode) {
-                    case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                        // If request is cancelled, the result arrays are empty.
-                        if (grantResults.length > 0
-                                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                            mLocationPermissionGranted = true;
-                        }
+    //On implémente l'interface pour recevoir la réponse de l'utilisateur lors de la demande de permission
+    public class MainActivity implements ActivityCompat.OnRequestPermissionsResultCallback
+    
+    [...]
+    
+    //On reçoit la réponse de l'utilisateur ici 
+    @Override 
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+            mLocationPermissionGranted = false;
+            switch (requestCode) {
+                case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                    // If request is cancelled, the result arrays are empty.
+                    if (grantResults.length > 0
+                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        mLocationPermissionGranted = true;
                     }
                 }
-        }
-
-        //On demande la permission ici
-        protected void getLocationPermission(){
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                    android.Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                mLocationPermissionGranted = true;
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                        PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             }
-        }
+    }
 
-    ```
+    //On demande la permission ici
+    protected void getLocationPermission(){
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+    ```    
 #### Detecter la position et centrer la caméra sur le lieu
 
 > Vous allez devoir utiliser l'API Google Maps couplé au Service Google Play de Localisation pour réaliser cela.
 
 - Quand l'utilisateur clique sur le bouton de localisation, vous devrez vérifier les permissions, detecter la position et enfin bouger la caméra où il faut.
-- Pour récuperer la position du téléphone 
+- Pour récuperer la position du téléphone     
+
 ```java
 private void getDeviceLocation() {
         try {
@@ -233,9 +234,7 @@ private void getDeviceLocation() {
             Log.e(TAG, e.getMessage());
         }
     }
-
 ```
 - Faite valider par l'enseignant
-
-- Bonus ajouter un `Marker` de position la où vous vous trouvez sur la carte
+- Bonus ajouter un `Marker` de position la où vous vous trouvez sur la carte    
 ![](projectAssets/marker.png)
