@@ -3,12 +3,9 @@ Dans ce TP vous allez apprendre à utiliser plusieurs services google, les plus 
 
 ## Notions
 - Récuperer une clé d'API pour un service Google
-- Utiliser l'assistant Android Studio pour Firebase
 - Implémenter une Carte Google Maps dans votre application 
 - Detecter la localisation GPS du téléphone et l'afficher
 - Parcourir une documentation et s'en servir dans votre projet
-- Utiliser les notifications via FCM (GCM est déprécié) 
-- Construire une notification dans votre application
 
 ## Setup 
 ### Etape 1 - Créer le projet
@@ -102,7 +99,7 @@ Voilà vous êtes paré à commencer à Coder ! Non en fait faut lire la documen
 - Il faut que vous implémentiez une vue du monde avec Google Map dans votre application.
 - Retournez dans la Console Google où se trouve votre projet et trouver le lien vers la documentation qui doit ressembler à ca : ![](projectAssets/api_documentation_link.png)
 - Cliquer sur `Documentation`
-- Une fois la documentation affiché, vous trouverez beaucoup d'aide, et en fouillant un peu vous pourrez retrouver tout ce que nous avons fait jusqu'a présent. (Levez la main quand l'enseignant dira "Sapin"). Il est très important de savoir naviguer dans une documentation, de trouver les bonnes ressources sur le net ou en explorant des exemples de code. 
+- Une fois la documentation affiché, vous trouverez beaucoup d'aide, et en fouillant un peu vous pourrez retrouver tout ce que nous avons fait jusqu'a présent. Il est très important de savoir naviguer dans une documentation, de trouver les bonnes ressources sur le net ou en explorant des exemples de code. 
 - Normalement vous pouvez facilement ajouter une carte à votre application Android en allant dans la section `Creating a Map` et `Map Objects`. 
 - Compiler et faites en sorte que l'application fonctionne. 
 - Arretez vous et faites valider par l'enseignant dès que vous aurez ajouté le `Marker` sur votre carte.
@@ -146,7 +143,7 @@ A partir de la version 6 d'Android les développeurs d'application doivent deman
 Avant de detecter la position du téléphone il va falloir demander à l'utilisateur si il le veut bien.   
 [Plus de détails ici avec une vidéo](https://www.youtube.com/watch?v=C8lUdPVSzDk)
 
-> Les permissions sont fastidieuses à gérer mais très importantes dans l'experience utilisateur, trop de permissions demandées et il désinstalle. Demandez les au moment où l'utilisateur souhaite accéder une fonction particulière qui nécessite une permission. Ne demandez pas tout d'un coup au démarrage de l'app.   
+> Les permissions sont fastidieuses à gérer mais très importantes dans l'experience utilisateur, trop de permissions demandées et il désinstalle. Demandez les au moment où l'utilisateur souhaite accéder à une fonction particulière qui nécessite une permission. **Ne demandez pas tout d'un coup au démarrage de l'app.**   
 
 ![](projectAssets/permission_schema.png)    
 
