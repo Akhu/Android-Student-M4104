@@ -28,10 +28,8 @@ Dans le manifest du projet ajouter les permissions d'accès à la localisation p
 
 - Dans votre fichier `build.gradle` ajouter les dépendances nécessaire pour accéder aux services Google Play : 
 Il faut s'assurer que vous trouviez bien la ligne suivant dans `repositories`
-    ```groovy
-    google() ou maven { url "https://maven.google.com" }
-    ```
-
+    `google()` **ou** `maven { url "https://maven.google.com" }`
+ 
 - Ensuite il faut importer les bibliothèques qui vont nous être utiles. Puisque nous allons avoir besoin de la localisation, il faut que vous ajoutiez la **bonne bibliothèque** depuis cette liste :
 
     | Google+                                  | com.google.android.gms:play-services-plus:16.0.0      |
